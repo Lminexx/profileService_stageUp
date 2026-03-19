@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: aleksandrkiselev
+      comment: Создание таблицы профилей организаций/площадок
+      changes:
+        - createTable:
+            tableName: organizations
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: "Ссылка на пользователя из User Service"
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: city
+                  type: VARCHAR(100)
+              - column:
+                  name: contact_phone
+                  type: VARCHAR(20)
+              - column:
+                  name: contact_email
+                  type: VARCHAR(100)
+              - column:
+                  name: website
+                  type: VARCHAR(255)
+              - column:
+                  name: logo_url
+                  type: VARCHAR(255)

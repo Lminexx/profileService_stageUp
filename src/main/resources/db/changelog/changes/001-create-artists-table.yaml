@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: aleksandrkiselev
+      comment: Create artists table
+      changes:
+        - createTable:
+            tableName: artists
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: display_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: genre
+                  type: VARCHAR(100)
+              - column:
+                  name: city
+                  type: VARCHAR(100)
+              - column:
+                  name: reputation_score
+                  type: DECIMAL(5,2)
+                  defaultValueNumeric: 0.0
+              - column:
+                  name: contact_phone
+                  type: VARCHAR(20)
+              - column:
+                  name: contact_email
+                  type: VARCHAR(100)
+              - column:
+                  name: profile_picture_url
+                  type: VARCHAR(255)
+              - column:
+                  name: video_samples
+                  type: TEXT
+              - column:
+                  name: audio_samples
+                  type: TEXT
+              - column:
+                  name: social_links
+                  type: JSONB
