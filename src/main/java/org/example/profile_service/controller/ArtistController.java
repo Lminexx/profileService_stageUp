@@ -3,11 +3,13 @@ package org.example.profile_service.controller;
 import org.example.profile_service.DTO.ArtistDTO;
 import org.example.profile_service.DTO.ArtistDisplayNameDTO;
 import org.example.profile_service.DTO.ArtistRequest;
-import org.example.profile_service.entity.Artist;
+import org.example.profile_service.DTO.AvatarDTO;
 import org.example.profile_service.service.ArtistService;
+import org.example.profile_service.service.AvatarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -66,5 +68,14 @@ public class ArtistController {
         return new ResponseEntity<>(artistService.getDisplayName(userId), HttpStatus.OK);
     }
 
+    @PostMapping("/avatar/{userId}")
+    public ResponseEntity<AvatarDTO> uploadArtistAvatar(@RequestParam MultipartFile avatarFile,
+                                                        @PathVariable UUID userId) {
+        return new ResponseEntity<>(artistService.uploadAvatar(avatarFile, userId), HttpStatus.OK);
+    }
+    @GetMapping("/avatar/{userId}")
+    public ResponseEntity<AvatarDTO> getArtistAvatar(@PathVariable UUID userId) {
+        return new ResponseEntity<AvatarDTO>(artistService.getAvatar(userId), HttpStatus.OK);
+    }
 
 }

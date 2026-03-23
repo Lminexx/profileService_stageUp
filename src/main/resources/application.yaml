@@ -38,3 +38,9 @@ server:
   address: 0.0.0.0
   port: 8082
 
+minio:
+  url: ${MINIO_URL:http://localhost:9000}
+  access-key: ${MINIO_ACCESS_KEY:minioadmin}
+  secret-key: ${MINIO_SECRET_KEY:minioadmin}
+  bucket: avatars
+

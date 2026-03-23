@@ -3,11 +3,13 @@ package org.example.profile_service.service;
 import lombok.extern.slf4j.Slf4j;
 import org.example.profile_service.DTO.ArtistDTO;
 import org.example.profile_service.DTO.ArtistDisplayNameDTO;
+import org.example.profile_service.DTO.AvatarDTO;
 import org.example.profile_service.entity.Artist;
 import org.example.profile_service.mapping.ArtistMapper;
 import org.example.profile_service.repository.ArtistRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,12 +21,15 @@ public class ArtistService {
 
     private final ArtistRepository artistRepository;
     private final ArtistMapper artistMapper;
+    private final AvatarService avatarService;
 
 
     public ArtistService(ArtistRepository artistRepository,
-                         ArtistMapper artistMapper) {
+                         ArtistMapper artistMapper,
+                         AvatarService avatarService) {
         this.artistRepository = artistRepository;
         this.artistMapper = artistMapper;
+        this.avatarService = avatarService;
     }
 
 
@@ -102,6 +107,25 @@ public class ArtistService {
         artistDisplayNameDTO.setArtistName(artist.getDisplayName());
         return artistDisplayNameDTO;
     }
+    @Transactional
+    public AvatarDTO uploadAvatar(MultipartFile file, UUID userId) {
+        String avatar = avatarService.uploadAvatar(file);
+        Artist artist = artistRepository.findById(userId).orElseThrow(()->
+                new RuntimeException("Артиста с таким айди не существует"));
+        artist.setProfilePictureUrl(avatar);
+        artistRepository.save(artist);
+        AvatarDTO avatarDTO = new AvatarDTO();
+        avatarDTO.setAvatarUrl(avatar);
+        return avatarDTO;
+    }
 
+    public AvatarDTO getAvatar(UUID userId) {
+        log.info("get avatar {}", userId);
+        AvatarDTO avatarDTO = new AvatarDTO();
+        Artist artist = artistRepository.findById(userId).orElseThrow(()->
+                new RuntimeException("Артиста с таким айди не существует"));
+        avatarDTO.setAvatarUrl(artist.getProfilePictureUrl());
+        return avatarDTO;
+    }
 
 }
