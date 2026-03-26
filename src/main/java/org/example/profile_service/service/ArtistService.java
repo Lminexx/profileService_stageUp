@@ -109,7 +109,7 @@ public class ArtistService {
     }
     @Transactional
     public AvatarDTO uploadAvatar(MultipartFile file, UUID userId) {
-        String avatar = avatarService.uploadAvatar(file);
+        String avatar = avatarService.uploadAvatar(file, "Artist");
         Artist artist = artistRepository.findById(userId).orElseThrow(()->
                 new RuntimeException("Артиста с таким айди не существует"));
         artist.setProfilePictureUrl(avatar);

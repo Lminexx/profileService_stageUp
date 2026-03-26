@@ -1,11 +1,13 @@
 package org.example.profile_service.controller;
 
+import org.example.profile_service.DTO.AvatarDTO;
 import org.example.profile_service.DTO.OrganizationDTO;
 import org.example.profile_service.DTO.OrganizationRequest;
 import org.example.profile_service.service.OrganizationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -55,5 +57,15 @@ public class OrganizationController {
                 organizationRequest.getWebsite(),
                 organizationRequest.getLogo_url()
         ), HttpStatus.OK);
+    }
+
+    @PostMapping("/avatar/{organizerId}")
+    public ResponseEntity<AvatarDTO> uploadArtistAvatar(@RequestParam MultipartFile avatarFile,
+                                                        @PathVariable UUID organizerId) {
+        return new ResponseEntity<>(organizationService.uploadAvatar(avatarFile, organizerId), HttpStatus.OK);
+    }
+    @GetMapping("/avatar/{organizerId}")
+    public ResponseEntity<AvatarDTO> getArtistAvatar(@PathVariable UUID organizerId) {
+        return new ResponseEntity<AvatarDTO>(organizationService.getAvatar(organizerId), HttpStatus.OK);
     }
 }

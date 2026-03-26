@@ -14,11 +14,17 @@ import java.util.UUID;
 public class AvatarService {
 
     private final MinioClient minioClient;
-    private final String bucketName = "artist";
 
-    public String uploadAvatar(MultipartFile file) {
+    public String uploadAvatar(MultipartFile file, String ArOrOrg) {
         log.info("upload avatar {}", file.getOriginalFilename());
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        String bucketName = "";
+        if(ArOrOrg.equals("Artist")){
+            bucketName = "artist";
+        }else if(ArOrOrg.equals("Organizer")){
+            bucketName = "organizer";
+        }
+
         try {
             minioClient.putObject(PutObjectArgs.builder()
                     .bucket(bucketName)

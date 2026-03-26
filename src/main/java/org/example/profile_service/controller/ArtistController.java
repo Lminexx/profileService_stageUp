@@ -1,11 +1,9 @@
 package org.example.profile_service.controller;
-
 import org.example.profile_service.DTO.ArtistDTO;
 import org.example.profile_service.DTO.ArtistDisplayNameDTO;
 import org.example.profile_service.DTO.ArtistRequest;
 import org.example.profile_service.DTO.AvatarDTO;
 import org.example.profile_service.service.ArtistService;
-import org.example.profile_service.service.AvatarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
